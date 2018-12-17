@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
     @PostMapping(value = "/users")
-    public ResponseEntity<String> saveUser(@RequestBody User user){
+    public ResponseEntity<String> saveUser(@Valid @RequestBody User user){
         User createdUser = userDatabaseService.saveUser(user);
         URI uri = null;
         if(Optional.ofNullable(createdUser).isPresent()){

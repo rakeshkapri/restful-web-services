@@ -4,7 +4,6 @@ import com.in28minutes.rest.webservices.restfulwebservices.entity.User;
 import com.in28minutes.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import com.in28minutes.rest.webservices.restfulwebservices.service.UserDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -28,7 +27,7 @@ public class UserController {
     public User retrieveUser(@PathVariable int id) {
         User user =  userDatabaseService.findOne(id);
         if(user==null){
-            throw new UserNotFoundException("id-" + id);
+            throw new UserNotFoundException("user not found id-" + id);
         }
         else{
             return user;
@@ -46,5 +45,13 @@ public class UserController {
             uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
         }
         return ResponseEntity.created(uri).build();
+    }
+
+    @DeleteMapping(value = "/users/{id}")
+    public void deleteUser(@PathVariable int id){
+        User user = userDatabaseService.deleteUser(id);
+        if(user==null){
+            throw new UserNotFoundException("id-"+id);
+        }
     }
 }

@@ -39,4 +39,15 @@ public class UserDatabaseService {
             return null;
         }
     }
+
+    public User deleteUser(int id){
+        if(userMap.containsKey(id)){
+            User user = userMap.get(id);
+            userMap.remove(id);
+            return user;
+        }
+        else{
+            return null;
+        }
+    }
 }

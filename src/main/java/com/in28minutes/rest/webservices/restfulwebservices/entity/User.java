@@ -19,6 +19,5 @@ public class User {
     @Size(min = 2, message = "name should contain min 2 characters")
     private String name;
     @Past
-    @JsonIgnore
     private LocalDate dateOfBirth;
 }

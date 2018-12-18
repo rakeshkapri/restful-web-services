@@ -1,5 +1,6 @@
 package com.in28minutes.rest.webservices.restfulwebservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.validation.constraints.NotNull;
@@ -18,5 +19,6 @@ public class User {
     @Size(min = 2, message = "name should contain min 2 characters")
     private String name;
     @Past
+    @JsonIgnore
     private LocalDate dateOfBirth;
 }

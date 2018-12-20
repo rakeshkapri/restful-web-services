@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class PersonVersioningController {
 
-    @GetMapping("/person/v1")
+    @GetMapping(value = "/person", params = "version=1")
     public PersonV1 getPersonV1(){
-        return new PersonV1("Rakesh Kapri");
+        return new PersonV1("Rakesh Kapri V1");
     }
 
-    @GetMapping("/person/v2")
+    @GetMapping(value = "/person", params = "version=2")
     public PersonV2 getPersonV2(){
-        Name name = new Name("Rakesh", "Kapri");
+        Name name = new Name("Rakesh", "Kapri V2");
         return new PersonV2(name);
     }
 }

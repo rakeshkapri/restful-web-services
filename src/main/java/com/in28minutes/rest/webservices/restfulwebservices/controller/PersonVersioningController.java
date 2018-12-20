@@ -31,12 +31,12 @@ public class PersonVersioningController {
         return new PersonV2(name);
     }
 
-    @GetMapping(value = "/person", produces = "application/v1")
+    @GetMapping(value = "/person/produces", produces = "application/vnd.company.app-v1+json")
     public PersonV1 getContentV1(){
         return new PersonV1("Rakesh Kapri V1");
     }
 
-    @GetMapping(value = "/person", produces = "application/v2")
+    @GetMapping(value = "/person/produces", produces = "application/vnd.company.app-v2+json")
     public PersonV2 getContentV2(){
         Name name = new Name("Rakesh", "Kapri V2");
         return new PersonV2(name);

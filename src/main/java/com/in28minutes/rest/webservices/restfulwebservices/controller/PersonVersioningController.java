@@ -30,4 +30,15 @@ public class PersonVersioningController {
         Name name = new Name("Rakesh", "Kapri H2");
         return new PersonV2(name);
     }
+
+    @GetMapping(value = "/person", produces = "application/v1")
+    public PersonV1 getContentV1(){
+        return new PersonV1("Rakesh Kapri V1");
+    }
+
+    @GetMapping(value = "/person", produces = "application/v2")
+    public PersonV2 getContentV2(){
+        Name name = new Name("Rakesh", "Kapri V2");
+        return new PersonV2(name);
+    }
 }

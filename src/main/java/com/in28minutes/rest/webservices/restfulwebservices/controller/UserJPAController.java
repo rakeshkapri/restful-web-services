@@ -3,6 +3,7 @@ package com.in28minutes.rest.webservices.restfulwebservices.controller;
 import com.in28minutes.rest.webservices.restfulwebservices.entity.Post;
 import com.in28minutes.rest.webservices.restfulwebservices.entity.User;
 import com.in28minutes.rest.webservices.restfulwebservices.exception.UserNotFoundException;
+import com.in28minutes.rest.webservices.restfulwebservices.repository.PostRepository;
 import com.in28minutes.rest.webservices.restfulwebservices.repository.UserRepository;
 import com.in28minutes.rest.webservices.restfulwebservices.service.UserDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,8 @@ public class UserJPAController {
 
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private PostRepository postRepository;
 
     @GetMapping(value = "/jpa/users")
     public List<User> retrieveAllUsers(){
@@ -48,17 +51,24 @@ public class UserJPAController {
         return resource;
     }
 
-    @PostMapping(value = "/jpa/users")
-    public ResponseEntity<String> saveUser(@Valid @RequestBody User user){
-        User createdUser = userRepository.save(user);
-        URI uri = null;
-        if(Optional.ofNullable(createdUser).isPresent()){
-            uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdUser.getId()).toUri();
+    @PostMapping(value = "/jpa/users/{id}/posts")
+    public ResponseEntity<String> saveUser(@RequestParam int id, @Valid @RequestBody Post post){
+        Optional<User> userserOptional = userRepository.findById(id);
+        if(userserOptional.isPresent()){
+            User user = userserOptional.get();
+            Post createdPost = postRepository.save(post);
+            URI uri = null;
+            if(Optional.ofNullable(createdPost).isPresent()){
+                uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdPost.getPostId()).toUri();
+            }
+            else{
+                uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+            }
+            return ResponseEntity.created(uri).build();
         }
         else{
-            uri = ServletUriComponentsBuilder.fromCurrentRequest().build().toUri();
+            throw new UserNotFoundException("User Id - " + id);
         }
-        return ResponseEntity.created(uri).build();
     }
 
     @DeleteMapping(value = "/jpa/users/{id}")

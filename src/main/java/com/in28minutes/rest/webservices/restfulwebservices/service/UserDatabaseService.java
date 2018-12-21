@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 public class UserDatabaseService {
     private static Map<Integer, User> userMap = new HashMap<>();
     static{
-        userMap.put(1, User.builder().id(1).name("Mr. A").dateOfBirth(
-                LocalDate.of(1983, 02, 15)).build());
-        userMap.put(2, User.builder().id(2).name("Mr. B").dateOfBirth(
-                LocalDate.of(1990, 10, 20)).build());
-        userMap.put(3, User.builder().id(3).name("Mr. C").dateOfBirth(
-                LocalDate.of(1975, 05, 10)).build());
+        userMap.put(1, new User(1,"Mr. A",
+                LocalDate.of(1983, 02, 15)));
+        userMap.put(2, new User(1,"Mr. B",
+                LocalDate.of(1983, 02, 15)));
+        userMap.put(3, new User(1,"Mr. C",
+                LocalDate.of(1983, 02, 15)));
     }
 
     public List<User> findAll(){

@@ -1,5 +1,6 @@
 package com.in28minutes.rest.webservices.restfulwebservices.controller;
 
+import com.in28minutes.rest.webservices.restfulwebservices.entity.Post;
 import com.in28minutes.rest.webservices.restfulwebservices.entity.User;
 import com.in28minutes.rest.webservices.restfulwebservices.exception.UserNotFoundException;
 import com.in28minutes.rest.webservices.restfulwebservices.repository.UserRepository;
@@ -29,7 +30,9 @@ public class UserJPAController {
 
     @GetMapping(value = "/jpa/users")
     public List<User> retrieveAllUsers(){
-        return userRepository.findAll();
+        List<User> userList = userRepository.findAll();
+        System.out.println("Size of user list -- > " + userList.size());
+        return userList;
     }
 
     @GetMapping(value = "/jpa/users/{id}")
@@ -61,5 +64,17 @@ public class UserJPAController {
     @DeleteMapping(value = "/jpa/users/{id}")
     public void deleteUser(@PathVariable int id){
        userRepository.deleteById(id);
+    }
+
+    @GetMapping(value = "/jpa/users/{id}/posts")
+    public List<Post> getUserPosts(@PathVariable int id){
+        Optional<User> userOptional = userRepository.findById(id);
+        if(userOptional.isPresent()){
+            return userOptional.get().getPosts();
+        }
+        else{
+            throw new UserNotFoundException("User Not found for - " + id);
+        }
+
     }
 }

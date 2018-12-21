@@ -1,20 +1,18 @@
 package com.in28minutes.rest.webservices.restfulwebservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.List;
 
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 public class User {
     @NotNull
@@ -25,4 +23,14 @@ public class User {
     private String name;
     @Past
     private LocalDate dateOfBirth;
+
+    public User(int id, String name, LocalDate dateOfBirth){
+        this.id = id;
+        this.name = name;
+        this.dateOfBirth = dateOfBirth;
+    }
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Post> posts;
 }

@@ -1,3 +1,6 @@
 insert into User values (1, sysdate(), 'John')
 insert into User values (2, sysdate(), 'Mark')
 insert into User values (3, sysdate(), 'Tom')
+INSERT INTO POST VALUES (1, 'First Post', 1)
+INSERT INTO POST VALUES (2, 'Second Post', 1)
+INSERT INTO POST VALUES (3, 'First Post', 2)
